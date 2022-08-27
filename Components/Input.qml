@@ -63,6 +63,7 @@ Column {
             model: userModel
             currentIndex: model.lastIndex
             textRole: "name"
+            displayText: ""
             hoverEnabled: true
             onActivated: {
                 username.text = currentText
@@ -74,7 +75,6 @@ Column {
                 contentItem: Text {
                     text: model.name
                     font.pointSize: root.font.pointSize * 0.8
-                    font.capitalization: Font.Capitalize
                     color: selectUser.highlightedIndex === index ? root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white" : root.palette.window.hslLightness >= 0.8 ? root.palette.highlight.hslLightness >= 0.8 ? "#444" : root.palette.highlight : "white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -181,7 +181,7 @@ Column {
         TextField {
             id: username
             text: config.ForceLastUser == "true" ? selectUser.currentText : null
-            font.capitalization: config.AllowBadUsernames == "false" ? Font.Capitalize : Font.MixedCase
+            font.pointSize: root.font.pointSize
             anchors.centerIn: parent
             height: root.font.pointSize * 3
             width: parent.width
@@ -232,6 +232,7 @@ Column {
             anchors.centerIn: parent
             height: root.font.pointSize * 3
             width: parent.width
+            font.pointSize: root.font.pointSize
             focus: config.ForcePasswordFocus == "true" ? true : false
             selectByMouse: true
             echoMode: revealSecret.checked ? TextInput.Normal : TextInput.Password

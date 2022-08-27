@@ -42,6 +42,7 @@ Item {
 
         hoverEnabled: true
         anchors.left: parent.left
+        topPadding: 5
         Keys.onPressed: {
             if (event.key == Qt.Key_Up && loginButton.state != "enabled" && !popup.opened)
                 revealSecret.focus = true,
