@@ -22,16 +22,16 @@
 // along with SDDM Sugar Candy. If not, see <https://www.gnu.org/licenses/>
 //
 
-import QtQuick 2.11
-import QtQuick.Layouts 1.11
-import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 
 Column {
     id: inputContainer
     Layout.fillWidth: true
 
-    property Control exposeSession: sessionSelect.exposeSession
+    property Item exposeSession: sessionSelect.exposeSession
     property bool failed
 
     Item {
@@ -237,6 +237,7 @@ Column {
             selectByMouse: true
             echoMode: revealSecret.checked ? TextInput.Normal : TextInput.Password
             placeholderText: config.TranslatePlaceholderPassword || textConstants.password
+            placeholderTextColor: Qt.rgba(root.palette.text.r, root.palette.text.g, root.palette.text.b, 0.32)
             horizontalAlignment: TextInput.AlignHCenter
             passwordCharacter: "•"
             passwordMaskDelay: config.ForceHideCompletePassword == "true" ? undefined : 1000
@@ -561,8 +562,8 @@ Column {
 
     Connections {
         target: sddm
-        onLoginSucceeded: {}
-        onLoginFailed: {
+        function onLoginSucceeded() {}
+        function onLoginFailed() {
             failed = true
             resetError.running ? resetError.stop() && resetError.start() : resetError.start()
         }
