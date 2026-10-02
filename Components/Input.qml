@@ -48,6 +48,8 @@ Column {
             width: parent.height
             height: parent.height
             anchors.left: parent.left
+            focusPolicy: Qt.NoFocus
+            z: 2
 
             property var popkey: config.ForceRightToLeft == "true" ? Qt.Key_Right : Qt.Key_Left
             Keys.onPressed: {
@@ -58,7 +60,6 @@ Column {
                 }
             KeyNavigation.down: username
             KeyNavigation.right: username
-            z: 2
 
             model: userModel
             currentIndex: model.lastIndex
@@ -85,23 +86,35 @@ Column {
                 }
             }
 
-            indicator: Button {
-                    id: usernameIcon
-                    width: selectUser.height * 0.8
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: selectUser.height * 0.125
-                    icon.height: parent.height * 0.25
-                    icon.width: parent.height * 0.25
-                    enabled: false
-                    icon.color: root.palette.text
-                    icon.source: Qt.resolvedUrl("../Assets/User.svgz")
+            indicator: Item {
+                id: usernameIcon
+                width: selectUser.height * 0.8
+                height: parent.height
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: selectUser.height * 0.125
+
+                Image {
+                    id: iconImg
+                    anchors.centerIn: parent
+                    width: parent.height * 0.25
+                    height: parent.height * 0.25
+                    source: Qt.resolvedUrl("../Assets/User.svgz")
+                    fillMode: Image.PreserveAspectFit
+                    visible: false
+                }
+
+                ColorOverlay {
+                    anchors.fill: iconImg
+                    source: iconImg
+                    color: "white"
+                }
             }
 
             background: Rectangle {
                 color: "transparent"
                 border.color: "transparent"
+                border.width: 0
             }
 
             popup: Popup {
@@ -139,42 +152,6 @@ Column {
                     NumberAnimation { property: "opacity"; from: 0; to: 1 }
                 }
             }
-
-            states: [
-                State {
-                    name: "pressed"
-                    when: selectUser.down
-                    PropertyChanges {
-                        target: usernameIcon
-                        icon.color: Qt.lighter(root.palette.highlight, 1.1)
-                    }
-                },
-                State {
-                    name: "hovered"
-                    when: selectUser.hovered
-                    PropertyChanges {
-                        target: usernameIcon
-                        icon.color: Qt.lighter(root.palette.highlight, 1.2)
-                    }
-                },
-                State {
-                    name: "focused"
-                    when: selectUser.activeFocus
-                    PropertyChanges {
-                        target: usernameIcon
-                        icon.color: root.palette.highlight
-                    }
-                }
-            ]
-
-            transitions: [
-                Transition {
-                    PropertyAnimation {
-                        properties: "color, border.color, icon.color"
-                        duration: 150
-                    }
-                }
-            ]
 
         }
 
