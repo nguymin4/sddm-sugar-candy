@@ -25,7 +25,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 import "Components"
 
 Pane {
@@ -258,17 +258,19 @@ Pane {
             visible: config.FullBlur == "true" || config.PartialBlur == "true" ? true : false
         }
 
-        GaussianBlur {
+        MultiEffect {
             id: blur
 
             height: parent.height
             width: config.FullBlur == "true" ? parent.width : form.width
             source: config.FullBlur == "true" ? backgroundImage : blurMask
-            radius: config.BlurRadius
-            samples: config.BlurRadius * 2 + 1
-            cached: true
+            blurEnabled: true
+            blurMax: config.BlurRadius
+            blur: 1.0
+            autoPaddingEnabled: false
+            clip: true
             anchors.centerIn: config.FullBlur == "true" ? parent : form
-            visible: config.FullBlur == "true" || config.PartialBlur == "true" ? true : false
+            visible: config.FullBlur == "true" || config.PartialBlur == "true"
         }
     }
 }

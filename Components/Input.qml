@@ -25,7 +25,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
 Column {
     id: inputContainer
@@ -104,10 +104,10 @@ Column {
                     visible: false
                 }
 
-                ColorOverlay {
+                MultiEffect {
                     anchors.fill: iconImg
                     source: iconImg
-                    color: "white"
+                    brightness: 1.0 
                 }
             }
 
@@ -137,14 +137,13 @@ Column {
                     radius: config.RoundCorners / 2
                     color: root.palette.window
                     layer.enabled: true
-                    layer.effect: DropShadow {
-                        transparentBorder: true
-                        horizontalOffset: 0
-                        verticalOffset: 10 * config.InterfaceShadowSize
-                        radius: 20 * config.InterfaceShadowSize
-                        samples: 41 * config.InterfaceShadowSize
-                        cached: true
-                        color: Qt.hsla(0,0,0,config.InterfaceShadowOpacity)
+                    layer.effect: MultiEffect {
+                        shadowEnabled: true
+                        shadowHorizontalOffset: 0
+                        shadowVerticalOffset: 10 * config.InterfaceShadowSize
+                        shadowColor: Qt.hsla(0, 0, 0, config.InterfaceShadowOpacity)
+                        shadowBlur: 1.0 * config.InterfaceShadowSize
+                        autoPaddingEnabled: true
                     }
                 }
 

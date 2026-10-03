@@ -24,7 +24,7 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
 Item {
     id: sessionButton
@@ -126,14 +126,13 @@ Item {
                 radius: config.RoundCorners / 2
                 color: config.BackgroundColor
                 layer.enabled: true
-                layer.effect: DropShadow {
-                    transparentBorder: true
-                    horizontalOffset: 0
-                    verticalOffset: 0
-                    radius: 20 * config.InterfaceShadowSize
-                    samples: 41 * config.InterfaceShadowSize
-                    cached: true
-                    color: Qt.hsla(0,0,0,config.InterfaceShadowOpacity)
+                layer.effect: MultiEffect {
+                    shadowEnabled: true
+                    shadowHorizontalOffset: 0
+                    shadowVerticalOffset: 0
+                    shadowColor: Qt.hsla(0, 0, 0, config.InterfaceShadowOpacity)
+                    shadowBlur: 1.0 * config.InterfaceShadowSize
+                    autoPaddingEnabled: true
                 }
             }
 
